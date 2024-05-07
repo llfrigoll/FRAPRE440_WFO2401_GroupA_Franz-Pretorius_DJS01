@@ -6,26 +6,45 @@
  */
 
 // Given Parameters
-const vel = 10000; // velocity (km/h)
-const acc = 3; // acceleration (m/s^2)
-const time = 3600; // seconds (1 hour)
-const d = 0; // distance (km)
+const velocity = 10000; // velocity (km/h)
+const acceleration = 3; // acceleration (m/s^2)
+const time = 3600; // (1 hour)
+const distance = 0; // distance (km)
 const fuel = 5000; // remaining fuel (kg)
-const fbr = 0.5; // fuel burn rate (kg/s)
+const fuelBurnRate = 0.5; // fuel burn rate (kg/s)
 
-
-const d2 = d + (vel*time) //calcultes new distance
-const rf = fbr*time //calculates remaining fuel
-const vel2 = calcNewVel(acc, vel, time) //calculates new velocity based on acceleration
-
-// Pick up an error with how the function below is called and make it robust to such errors
-calcNewVel = (vel, acc, time) => { 
-  return vel + (acc*time)
+//Calculates and displays new distance
+try{
+  const newDistance = distance + (velocity*time/3600) //calcultes new distance
+  if(newDistance !== 10000) throw "New distace calculated incorrectly"
+  console.log(`Corrected New Distance: ${newDistance} km`);
+}catch(err){
+  console.error(err)
 }
 
-console.log(`Corrected New Velocity: ${vel2} km/h`);
-console.log(`Corrected New Distance: ${d2} km`);
-console.log(`Corrected Remaining Fuel: ${rf} kg`);
+//Calculates and displays remaining fuel
+try{
+  const remainingFuel = fuel - (fuelBurnRate*time) //calculates remaining fuel
+  if(remainingFuel !== 3200) throw "Remaining fuel calculated incorrectly"
+  console.log(`Corrected Remaining Fuel: ${remainingFuel} kg`);
+}catch(err){
+  console.error(err)
+}
+
+//Calculates and displays new velocity
+try{
+  const newVelocity = calcNewVel(velocity, acceleration, time) //calculates new velocity based on acceleration
+
+  function calcNewVel(velocity, acceleration, time) {
+    velocity = velocity*1000/3600 //converts to (m/s)
+    return (velocity + (acceleration*time))*3600/1000 //converts back to (km/h)
+  }
+
+  if(newVelocity !== 48880) throw "New velocity calculated incorrectly"
+  console.log(`Corrected New Velocity: ${newVelocity} km/h`);
+}catch(err){
+  console.error(err)
+}
 
 
 
